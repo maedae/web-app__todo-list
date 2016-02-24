@@ -35,6 +35,10 @@ MyApp.post "/sign_up/confirmation" do
 end
 
 MyApp.get "/users/user/:id" do
-  @user = User.find_by_id(session[:user_id])
-  erb :"/users/view_user"
+  if User.find_by_id(session[:user_id]) == nil
+    erb :"/logins/login"
+  else
+     @user = User.find_by_id(session[:user_id])
+     erb :"/users/view_user"
+  end
 end

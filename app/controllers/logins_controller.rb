@@ -3,7 +3,7 @@ MyApp.get "/login" do
 end
 
 MyApp.post "/login/confirmation" do
-  if User.find_by_email(params[:email]) == nil
+  if User.exists?(:email => params[:email]) == false
     @invlid_email = true
     erb :"/logins/login"
   else
