@@ -1,0 +1,19 @@
+<center><h1> Add Todo</h1></center>
+
+  <form  method="POST" action="/users/user/<%= @current_user.id %>/todos/create/confirmation">
+
+
+    Title:&emsp;<input type="text" name="new_title" value="<%= params[:new_title] %>">&emsp;&emsp;&emsp;
+
+    <br>
+    <br>
+    Include an optional description for your todo task:<br>
+    <textarea name="new_description" cols="70" rows="8">
+    <%=  params[:new_description] %>
+    </textarea>
+    <br>
+    <br>
+
+   <p><input type="submit" value="Create"></p>
+   </form>
+    

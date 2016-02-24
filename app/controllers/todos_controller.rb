@@ -18,3 +18,26 @@ MyApp.get "/users/user/:id/todos" do
     erb :"/logins/login"
   end
 end
+
+MyApp.get "/users/user/:id/todos/create" do
+    if User.find_by_id(session[:user_id]) == nil
+      erb :"/logins/login"
+    else
+      @current_user = User.find_by_id(session[:user_id])
+      erb :"/todos/create_todo"
+    end
+  end
+
+  MyApp.get "/users/user/:id/todos/create/confirmation" do
+    if User.find_by_id(session[:user_id]) != nil
+      @current_user = User.find_by_id(session[:user_id])
+      @todo = Todo.new
+      @todo.title = params[:new_title]
+      @todo.description = params[:new_description]
+      @todo.completed = false
+      @todo.user_id = @current_user.id
+    else
+      erb :"/logins/login"
+    end
+  end
+
