@@ -12,15 +12,24 @@ MyApp.post "/users/create/confirmation" do
 
   @error_check = @new_user.create_user_check_valid_action
 
-  # checks to see if error array value is empty. If it is, they are sent to a customized welcome page. If it isn't
-  # user is sent back to the creation page and will see customized error message instructions.
-  if @error_check.empty? == true
+  # checks to see if error array value is empty.
+  # If variable is not empty, error flag is set and user is redirect back to create page.
+  
+  if @error_check.empty? == false
+    @error = true
+    erb :"/users/create_user"
+
+  # Next, it will check to see if the user email selected already exists. 
+  # If it does, error flag is set && user is directed to the create page with a different message.
+  elsif User.exists?(:email => params[:email]) == true
+    @matching_user_error = true 
+    erb :"/users/create_user"
+
+  # If neither of the aformentioned scenarios occur, user if directed to customized home page
+  else
     @new_user.save
     session[:user_id] = @new_user.id  
     erb :"/main"
-  else
-    @error = true
-    erb :"/users/create_user"
   end
 
 end

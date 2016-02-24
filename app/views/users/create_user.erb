@@ -1,12 +1,16 @@
-<center><h1> Create a New Account </h1></center>
+<center><h1> Create a New Account </h1>  </center>
 
-<!-- RETURNS conditional method when controller returns to add screen-->
-<!--  due to an "active" pre-existing entry check being flaggged as True in controller  -->
 <% if @error == true %>
   <% @error_check.each do |error| %>
-    <%= error %>
+   <font color="red"><b> <%= error %> </b></font>
     <br>
   <% end %>
+  <br>
+  <br>
+<% end %>
+
+<% if @matching_user_error == true %>
+  <font color="red"><b><%= @new_user.user_already_exists_error %> </b></font>
   <br>
   <br>
 <% end %>

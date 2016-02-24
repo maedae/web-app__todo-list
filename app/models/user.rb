@@ -44,6 +44,7 @@ class User < ActiveRecord::Base
       message << user_password_error
     end
     
+
     return message
   end
 
@@ -60,6 +61,11 @@ class User < ActiveRecord::Base
   # RETURNS String
   def user_password_error
     return "Please include a password."
+  end
+
+  # RETURNS String
+  def user_already_exists_error
+    return "A user with this email already exists. Please sign in or use a different email"
   end
 
 end
