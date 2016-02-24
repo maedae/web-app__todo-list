@@ -3,7 +3,8 @@
 Email:&emsp;<b><%= @user.email %></b>
 
 <center>
-<a href="/users/user/<%= @user.id %>/logout"> Sign Out </a>
+<form  method="POST" action="/logout">
+<input type="submit" value="Sign Out">
 &emsp;&emsp;|&emsp;&emsp;
 <a href="/users/user/<%= @user.id %>/update"> Update Account </a>
 &emsp;&emsp;|&emsp;&emsp;

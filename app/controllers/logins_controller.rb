@@ -17,3 +17,12 @@ MyApp.post "/login/confirmation" do
     end
   end
 end
+
+MyApp.post "/logout" do
+  if User.find_by_id(session[:user_id]) != nil
+    session[:user_id] = nil
+    erb :"/main"
+  else
+    erb :"/logins/login"
+  end
+end
