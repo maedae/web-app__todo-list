@@ -1,0 +1,9 @@
+<center><h1>Welcome, <%= @user.name.capitalize %></h1></center>
+
+Email:&emsp;<b><%= @user.email %></b>
+
+<center>
+<a href="/users/user/<%= @user.id %>/update"> Update Account </a>
+&emsp;&emsp;|&emsp;&emsp;
+<a href="/users/user/<%= @user.id %>/reset_password"> Change Password </a>
+</center>

@@ -4,6 +4,7 @@ MyApp.get "/users/create" do
   erb :"/users/create_user"
 end
 
+# handles form data sent from "/users/create"
 MyApp.post "/users/create/confirmation" do
   @new_user = User.new
   @new_user.name = params[:name]
@@ -29,7 +30,11 @@ MyApp.post "/users/create/confirmation" do
   else
     @new_user.save
     session[:user_id] = @new_user.id  
-    erb :"/main"
+    redirect :"/users/user/#{session[:user_id]}"
   end
+end
 
+MyApp.get "/users/user/:id" do
+  @user = User.find_by_id(session[:user_id])
+  erb :"/users/view_user"
 end
