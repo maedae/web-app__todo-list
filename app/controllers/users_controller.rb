@@ -1,11 +1,11 @@
 # controller used for the creation of a new user.
 # page contains new user form. 
-MyApp.get "/users/create" do
+MyApp.get "/sign_up" do
   erb :"/users/create_user"
 end
 
 # handles form data sent from "/users/create"
-MyApp.post "/users/create/confirmation" do
+MyApp.post "/sign_up/confirmation" do
   @new_user = User.new
   @new_user.name = params[:name]
   @new_user.email = params[:email]

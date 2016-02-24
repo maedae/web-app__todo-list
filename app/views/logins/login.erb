@@ -1,5 +1,14 @@
 <center><h1>Sign In</h1></center>
-<form  method="POST" action="/users/create/confirmation">
+<% if @invlid_email == true %>
+<font color="red"><b> Invalid email. </b></font>
+<br>
+<br>
+<% end %>
+<% if @invalid_password == true %>
+<font color="red"><b>Invalid password.</b></font>
+<% end %>
+
+<form  method="POST" action="/login/confirmation">
 
 <p> Email:&emsp;
 <input type="text" name="email" value="<%= params[:email] %>"></p>
