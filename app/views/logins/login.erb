@@ -1,0 +1,8 @@
+<center><h1>Sign In</h1></center>
+<form  method="POST" action="/users/create/confirmation">
+
+<p> Email:&emsp;
+<input type="text" name="email" value="<%= params[:email] %>"></p>
+<p> Password:&emsp;
+<input type="text" name="password" value="<%= params[:password] %>"></p>
+<p><input type="submit" value="Login"></p>
