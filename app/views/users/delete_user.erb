@@ -1,0 +1,20 @@
+<center><h1> Are You Sure? </h1></center>
+
+<% if @invalid_password == true %>
+<font color="red"><b>Invalid password.</b></font>
+<br>
+<br>
+<% end %>
+
+<%= @current_user.name %>, if you are absolutely sure you want to delete your account,<br>
+please enter your password below and confirm:
+<br>
+<br>
+
+<form  method="POST" action="/users/user/<%= @current_user.id %>/delete/confirmation">
+
+<p> Password:&emsp;
+<input type="text" name="password" value="<%= params[:password] %>"></p>
+
+<p><input type="submit" value="Delete User"></p>
+</form>

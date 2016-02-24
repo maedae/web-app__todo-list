@@ -71,3 +71,28 @@ MyApp.post "/users/user/:id/update/confirmed" do
       end
   end
 end
+
+MyApp.get "/users/user/:id/delete" do
+  if User.find_by_id(session[:user_id]) == nil
+    erb :"/logins/login"
+  else
+     @current_user = User.find_by_id(session[:user_id])
+     erb :"/users/delete_user"
+  end
+end
+
+MyApp.post "/users/user/:id/delete/confirmation" do
+  if User.find_by_id(session[:user_id]) != nil
+    @current_user = User.find_by_id(session[:user_id])
+    if @current_user.password != params[:password]
+      @invalid_password = true
+      erb :"users/delete_user"
+    else
+      @current_user.delete
+      session["user_id"] = nil
+      erb :"/main"
+    end
+  else
+    erb :"/logins/login"
+  end
+end

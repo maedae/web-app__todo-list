@@ -3,7 +3,9 @@
 Email:&emsp;<b><%= @user.email %></b>
 
 <center>
+<a href="/users/user/<%= @user.id %>/logout"> Sign Out </a>
+&emsp;&emsp;|&emsp;&emsp;
 <a href="/users/user/<%= @user.id %>/update"> Update Account </a>
 &emsp;&emsp;|&emsp;&emsp;
-<a href="/users/user/<%= @user.id %>/reset_password"> Change Password </a>
+<a href="/users/user/<%= @user.id %>/delete"> Delete Account </a>
 </center>
