@@ -7,7 +7,7 @@ end
 # handles form data sent from "/users/create"
 MyApp.post "/sign_up/confirmation" do
   @new_user = User.new
-  @new_user.name = params[:name]
+  @new_user.name = params[:name].downcase.capitalize
   @new_user.email = params[:email]
   @new_user.password = params[:password]
 
@@ -40,5 +40,34 @@ MyApp.get "/users/user/:id" do
   else
      @user = User.find_by_id(session[:user_id])
      erb :"/users/view_user"
+  end
+end
+
+MyApp.get "/users/user/:id/update" do
+  if User.find_by_id(session[:user_id]) == nil
+    erb :"/logins/login"
+  else
+     @current_user = User.find_by_id(session[:user_id])
+     erb :"/users/update_user"
+  end
+end
+
+MyApp.post "/users/user/:id/update/confirmed" do
+  if User.find_by_id(session[:user_id]) == nil
+    erb :"/logins/login"
+  else
+     @current_user = User.find_by_id(session[:user_id])
+     @current_user.name = params[:name].downcase.capitalize
+     @current_user.email = params[:email]
+     @current_user.password = params[:password]
+     @error_check = @current_user.create_user_check_valid_action
+
+      if @error_check.empty? == false
+          @error = true
+          erb :"/users/update_user"
+      else
+        @current_user.save
+        redirect :"users/user/#{session[:user_id]}"
+      end
   end
 end

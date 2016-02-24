@@ -1,0 +1,25 @@
+<center><h1> Update @current_user.name </h1>  </center>
+
+<% if @error == true %>
+  <% @error_check.each do |error| %>
+   <font color="red"><b> <%= error %> </b></font>
+    <br>
+  <% end %>
+  <br>
+  <br>
+<% end %>
+
+<form  method="POST" action="/users/user/<%= session[:user_id] %>/update/confirmed">
+
+<p> Name:&emsp;
+<input type="text" name="name" value="<%= @current_user.name %>"></p>
+
+<p> Email:&emsp;
+<input type="text" name="email" value="<%= @current_user.email %>"></p>
+
+<p> Password:&emsp;
+<input type="text" name="password" value="<%= @current_user.password %>"></p>
+
+<p><input type="submit" value="Update"></p>
+
+</form>
