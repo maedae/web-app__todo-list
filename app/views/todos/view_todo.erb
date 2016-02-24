@@ -1,0 +1,57 @@
+<center><h1> <%= @current_user.name %>'s Todo List</h1>
+
+<h3> CURRENT TODOS </h3>
+<% if @unfinished_error == true %>
+  <%= @current_user.get_no_unfinished_todos_message %>
+<% else %>
+  <table border="0">
+    <thead>
+      <tr>
+      <th></th>
+      <th> &emsp;&emsp;</th>
+      <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @current_todos.each do |todo| %>
+        <tr>
+        <td>• <%= todo.title %></td>
+        <td>&emsp;&emsp;</td>
+        <td> <%=todo.description %> </td>
+      <% end %>
+      </tr>
+    </tbody>
+  </table>
+  <br>
+  <br>
+<% end %>
+
+<h3> COMPLETED TODOS </h3>
+<% if @completed_error == true %>
+  <%= @current_user.get_no_completed_todos_message %>
+<% else %>
+  <table border="0">
+    <thead>
+      <tr>
+      <th></th>
+      <th> &emsp;&emsp;</th>
+      <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @completed_todos.each do |todo| %>
+        <tr>
+        <td>• <%= todo.title %></td>
+        <td>&emsp;&emsp;</td>
+        <td> <%=todo.description %> </td>
+      <% end %>
+      </tr>
+    </tbody>
+  </table>
+  <br>
+  <br>
+<% end %>
+</center>
+<br>
+<br>
+<a href="/users/user/<%= @current_user.id %>/todos/create"> Add Todo </a>

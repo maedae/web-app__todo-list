@@ -6,6 +6,8 @@ Email:&emsp;<b><%= @user.email %></b>
 <form  method="POST" action="/logout">
 <input type="submit" value="Sign Out">
 &emsp;&emsp;|&emsp;&emsp;
+<a href="/users/user/<%= @user.id %>/todos"> "Todos" </a>
+&emsp;&emsp;|&emsp;&emsp;
 <a href="/users/user/<%= @user.id %>/update"> Update Account </a>
 &emsp;&emsp;|&emsp;&emsp;
 <a href="/users/user/<%= @user.id %>/delete"> Delete Account </a>
