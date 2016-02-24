@@ -1,0 +1,27 @@
+<center><h1> Create a New Account </h1></center>
+
+<!-- RETURNS conditional method when controller returns to add screen-->
+<!--  due to an "active" pre-existing entry check being flaggged as True in controller  -->
+<% if @error == true %>
+  <% @error_check.each do |error| %>
+    <%= error %>
+    <br>
+  <% end %>
+  <br>
+  <br>
+<% end %>
+
+<form  method="POST" action="/users/create/confirmation">
+
+<p> Name:&emsp;
+<input type="text" name="name" value="<%= params[:name] %>"></p>
+
+<p> Email:&emsp;
+<input type="text" name="email" value="<%= params[:email] %>"></p>
+
+<p> Password:&emsp;
+<input type="text" name="password" value="<%= params[:password] %>"></p>
+
+<p><input type="submit" value="Create"></p>
+
+</form>

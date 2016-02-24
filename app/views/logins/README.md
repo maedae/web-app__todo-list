@@ -1,1 +1,0 @@
-Views related to the logins_controller go here.
