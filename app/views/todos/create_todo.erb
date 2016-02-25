@@ -1,5 +1,16 @@
 <center><h1> Add Todo</h1></center>
 
+<% if @invalid_title_error == true %>
+  <font color="red"><b><%= @todo.todo_title_error %></b></font>
+  <br>
+  <br>
+<% end %>
+
+<% if @duplicate_title_error == true %>
+  <font color="red"><b><%= @todo.todo_title_already_exists_error %></b></font>
+  <br>
+  <br>
+<% end %>
   <form  method="POST" action="/users/user/<%= @current_user.id %>/todos/create/confirmation">
 
 
@@ -9,7 +20,7 @@
     <br>
     Include an optional description for your todo task:<br>
     <textarea name="new_description" cols="70" rows="8">
-    <%=  params[:new_description] %>
+    <%= params[:new_description] %>
     </textarea>
     <br>
     <br>

@@ -28,7 +28,7 @@ MyApp.get "/users/user/:id/todos/create" do
     end
   end
 
-  MyApp.get "/users/user/:id/todos/create/confirmation" do
+  MyApp.post "/users/user/:id/todos/create/confirmation" do
     if User.find_by_id(session[:user_id]) != nil
       @current_user = User.find_by_id(session[:user_id])
       @todo = Todo.new
@@ -36,6 +36,18 @@ MyApp.get "/users/user/:id/todos/create" do
       @todo.description = params[:new_description]
       @todo.completed = false
       @todo.user_id = @current_user.id
+
+      if @todo.check_todo_title_is_valid == false
+         @invalid_title_error = true
+         erb :"/todos/create_todo"
+
+      elsif Todo.exists?(:title => params[:new_title], :completed => false, :user_id => @current_user.id) == true
+        @duplicate_title_error = true
+        erb :"/todos/create_todo"
+      else
+        @todo.save
+        redirect :"/users/user/#{session[:user_id]}/todos"
+      end
     else
       erb :"/logins/login"
     end
