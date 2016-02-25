@@ -15,6 +15,13 @@
 
 
     Title:&emsp;<input type="text" name="new_title" value="<%= params[:new_title] %>">&emsp;&emsp;&emsp;
+    <br>
+    <br>
+    Assign to:&emsp;<select name="create_user_selection">
+    <% @users.each do |user| %>
+    <option value="<%= user.id %>"<%= "selected" if user.id.to_s == params[:create_user_selection] %>><%= user.name %></option> 
+    <% end %> 
+    </select>
 
     <br>
     <br>

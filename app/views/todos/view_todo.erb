@@ -1,6 +1,6 @@
-<center><h1> <%= @current_user.name %>'s Todo List</h1>
+<center><h1> <%= @current_user.name %>'s Todo List for [LIST NAME HERE]</h1>
 <form  method="GET" action="/users/user/<%= @current_user.id %>/todos/create">
-You have <b><%= @percentage_done %>%</b> of your list completed.&emsp;&emsp;<input type="submit" value="Add Todo"></form>
+You have <b><%= @percentage_done %>%</b> of your assigned tasks completed.&emsp;&emsp;<input type="submit" value="Add Todo"></form>
 <br>
 <br>
 

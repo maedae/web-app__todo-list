@@ -15,6 +15,17 @@ ActiveRecord::Schema.define(version: 0) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "lists", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "title"
+    t.integer  "user_id"
+    t.integer  "todo_id"
+    t.boolean  "completed"
+    t.integer  "created_by"
+    t.integer  "updated_by"
+  end
+
   create_table "todos", force: :cascade do |t|
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
@@ -22,6 +33,8 @@ ActiveRecord::Schema.define(version: 0) do
     t.text     "description"
     t.boolean  "completed"
     t.integer  "user_id"
+    t.integer  "created_by"
+    t.integer  "updated_by"
   end
 
   create_table "users", force: :cascade do |t|
@@ -30,6 +43,8 @@ ActiveRecord::Schema.define(version: 0) do
     t.string   "name"
     t.string   "email"
     t.string   "password"
+    t.integer  "created_by"
+    t.integer  "updated_by"
   end
 
 end

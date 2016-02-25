@@ -20,8 +20,16 @@
     <br>
   <% end %>
 
+  
   Title:&emsp;<input type="text" name="update_title" value="<%= @todo.title %>">&emsp;&emsp;&emsp;
+  <br>
+  <br>
 
+Reassign to:&emsp;<select name="update_user_selection">
+  <% @users.each do |user| %>
+    <option value="<%= user.id %>"<%= "selected" if user.id == @todo.user_id %>><%= user.name %></option> 
+    <% end %> 
+    </select>
     <br>
     <br>
     Include an optional description for your todo task:<br>
