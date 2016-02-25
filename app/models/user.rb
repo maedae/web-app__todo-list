@@ -86,5 +86,11 @@ class User < ActiveRecord::Base
     return "You have not finished any 'Todo' tasks."
   end
 
+  # Method deletes all open and completed todo tasks for the user
+  def delete_user_todos
+    user = self.id
+    Todo.where({"user_id" => user}).delete_all
+  end
+
 end
 

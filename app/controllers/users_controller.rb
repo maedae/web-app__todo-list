@@ -88,6 +88,7 @@ MyApp.post "/users/user/:id/delete/confirmation" do
       @invalid_password = true
       erb :"users/delete_user"
     else
+      @current_user.delete_user_todos
       @current_user.delete
       session["user_id"] = nil
       erb :"/main"
