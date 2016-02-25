@@ -1,7 +1,7 @@
 MyApp.get "/users/user/:id/todos" do
   if User.find_by_id(session[:user_id]) != nil
   @current_user = User.find_by_id(session[:user_id])
-
+  @percentage_done =@current_user.percent_of_list_done
     if @current_user.get_unfinished_todos.empty? == true
       @unfinished_error = true
     else
@@ -89,18 +89,15 @@ MyApp.post "/users/user/:id/todos/:id/update/confirmation" do
     end
 end
 
-MyApp.post "/users/user/:id/todos/:id/lock"do
+MyApp.post "/users/user/:id/todos/lock" do
     if User.find_by_id(session[:user_id]) != nil
       @current_user = User.find_by_id(session[:user_id])
-      @todo = Todo.find_by_id(params[:id])
- 
-      if @todo.completed == false
-        @todo.completed = true
-        @todo.save
-        redirect :"/users/user/#{session[:user_id]}/todos"
-      else
-        redirect :"/users/user/#{session[:user_id]}/todos"
-      end
+        if params[:completed_checkbox] != nil
+          @current_user.lock_batch_todos_for_user(params[:completed_checkbox])
+          redirect :"/users/user/#{session[:user_id]}/todos"
+        else
+          redirect :"/users/user/#{@curren_user.id}/todos"
+        end
     else
       redirect :"/login"
     end

@@ -32,5 +32,7 @@
     <br>
 
    <p><input type="submit" value="Update"></p>
+   <p><form  method="POST" action="/users/user/<%= @current_user.id %>/todos/<%= @todo.id %>/delete">
+    <input type="submit" value="Delete"></form></p>
    </form>
     

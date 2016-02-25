@@ -12,35 +12,28 @@ You have <b><%= @percentage_done %>%</b> of your list completed.&emsp;&emsp;<inp
     <thead>
       <tr>
       <th></th>
-      <th></th>
       <th> &emsp;&emsp;</th>
       <th></th>
-      <th>&emsp;&emsp;</th>
-      <th></th>
-      <th>&emsp;&emsp;</th>
+      <th> &emsp;&emsp;</th>
       <th></th>
       </tr>
     </thead>
     <tbody>
       <% @current_todos.each do |todo| %>
         <tr>
-        <td><form  method="POST" action="/users/user/<%= @current_user.id %>/todos/<%= todo.id %>/lock">
-            <input type="submit" value="DONE"></form></td>
-        <td>• <%= todo.title %></td>
+        <td><form  method="POST" action="/users/user/<%= @current_user.id %>/todos/lock">
+            <input type="checkbox" name="completed_checkbox[]" value=<%= todo.id %>></td>
+        <td>&emsp;&emsp;</td>
+        <td><a href="/users/user/<%= @current_user.id %>/todos/<%= todo.id %>/edit"><%= todo.title %></a></td>
         <td>&emsp;&emsp;</td>
         <td> <%=todo.description %> </td>
-        <td>&emsp;&emsp;</td>
-        <td><form  method="GET" action="/users/user/<%= @current_user.id %>/todos/<%= todo.id %>/edit">
-            <input type="submit" value="Edit"></form></td>
-        <td>&emsp;&emsp;</td>
-        <td><form  method="POST" action="/users/user/<%= @current_user.id %>/todos/<%= todo.id %>/delete">
-            <input type="submit" value="Delete"></form></td>
       <% end %>
       </tr>
     </tbody>
   </table>
   <br>
   <br>
+  <input type="submit" value="COMPLETED"></form>
 <% end %>
 <br>
 <br>

@@ -20,4 +20,9 @@ class Todo < ActiveRecord::Base
     return "This Todo task has already been completed and can no longer be edited"
   end
 
+  # RETURNS User instance where todo user_id matches user id. 
+  def get_user_info
+    return User.find_by_id(self.user_id)
+  end
+
 end

@@ -88,6 +88,11 @@ class User < ActiveRecord::Base
     return "You have not finished any 'Todo' tasks."
   end
 
+  # RETURNS String
+  def get_no_selected_todo_error
+    return "You need to select at least one todo to lock"
+  end
+
   # Method deletes all open and completed todo tasks for the user
   def delete_user_todos
     user = self.id
@@ -97,10 +102,9 @@ class User < ActiveRecord::Base
   def percent_of_list_done
     total_todos = Todo.where({"user_id" => self.id}).length
     completed_todos = Todo.where({"user_id" => self.id, "completed" => true}).length
-    todo_ratio = nil
 
     if total_todos == nil
-      total_todos == nil
+      total_todos = 0
     end
 
     if completed_todos == nil
@@ -111,5 +115,12 @@ class User < ActiveRecord::Base
     return todo_ratio.round(2)
   end
 
+  def lock_batch_todos_for_user(arr)
+    arr.each do |todo|
+      @todo = Todo.find_by_id(todo)
+      @todo.completed = true
+      @todo.save
+    end
+  end
 end
 
