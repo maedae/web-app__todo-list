@@ -1,11 +1,12 @@
 <center><h1> <%= @current_user.name %>'s Todo List</h1>
-<u>You have <b><%= @percentage_done %>%</b> of your list completed.</u>
+<form  method="GET" action="/users/user/<%= @current_user.id %>/todos/create">
+You have <b><%= @percentage_done %>%</b> of your list completed.&emsp;&emsp;<input type="submit" value="Add Todo"></form>
 <br>
 <br>
 
 <h3> CURRENT TODOS </h3>
 <% if @unfinished_error == true %>
-  <%= @current_user.get_no_unfinished_todos_message %>
+  <%= @current_user.get_no_unfinished_todos_message %> 
 <% else %>
   <table border="0">
     <thead>
@@ -75,4 +76,3 @@
 </center>
   <br>
   <br>
-<a href="/users/user/<%= @current_user.id %>/todos/create"> Add Todo </a>
