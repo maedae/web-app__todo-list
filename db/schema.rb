@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 0) do
     t.integer  "user_id"
     t.integer  "created_by"
     t.integer  "updated_by"
+    t.integer  "list_id"
   end
 
   create_table "users", force: :cascade do |t|

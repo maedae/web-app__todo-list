@@ -93,6 +93,16 @@ class User < ActiveRecord::Base
     return "You need to select at least one todo to lock"
   end
 
+  # RETURNS String
+  def get_no_unfinished_lists_for_all_users
+    return "There are no active lists available."
+  end
+
+  # RETURNS String
+  def get_no_completed_list_message_for_all_users
+    return "There are no completed lists available."
+  end
+
   # Method deletes all open and completed todo tasks for the user
   def delete_user_todos
     user = self.id

@@ -1,0 +1,73 @@
+
+<center><h1> ALL LISTS</h1></center>
+<form  method="GET" action="/lists/create">
+XXXX PERCENT OF ALL LISTS ARE FINISHED&emsp;&emsp;<input type="submit" value="Add List"></form>
+
+<h3> CURRENT LISTS </h3>
+<% if @unfinished_error == true %>
+  <%= @current_user.get_no_unfinished_lists_for_all_users %> 
+<% else %>
+  <table border="0">
+    <thead>
+      <tr>
+      <th></th>
+      <th> &emsp;&emsp;</th>
+      <th></th>
+      <th> &emsp;&emsp;</th>
+      <th># OF OPEN TASKS</th>
+      <th> &emsp;&emsp;</th>
+      <th>% COMPLETE</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @current_lists.each do |todo| %>
+        <tr>
+        <td><form  method="POST" action="/lists/list/<%= @list.id %>/lock">
+            <input type="checkbox" name="completed_list_checkbox[]" value=<%= todo.id %>></td>
+        <td>&emsp;&emsp;</td>
+        <td><a href="/lists/list/<%= @list.id %>/todos/all"><%= list.title %></a></td>
+        <td> &emsp;&emsp;</td>
+        <td># OF OPEN TASKS</td>
+        <td> &emsp;&emsp;</td>
+        <td>% COMPLETE</td>
+      <% end %>
+      </tr>
+    </tbody>
+  </table>
+  <br>
+  <br>
+  <input type="submit" value="COMPLETED"></form>
+<% end %>
+<br>
+<br>
+---------------------------------------------------------------------------
+<br>
+<br>
+
+<h3> COMPLETED LISTS </h3>
+<% if @completed_error == true %>
+  <%= @current_user.get_no_completed_list_message_for_all_users %>
+<% else %>
+  <table border="0">
+    <thead>
+      <tr>
+      <th></th>
+      <th> &emsp;&emsp;</th>
+      <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @completed_lists.each do |list| %>
+        <tr>
+        <td>• <%= list.title %></td>
+        <td>&emsp;&emsp;</td>
+      <% end %>
+      </tr>
+    </tbody>
+  </table>
+  <br>
+  <br>
+<% end %>
+</center>
+  <br>
+  <br>

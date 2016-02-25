@@ -1,0 +1,13 @@
+<center><h1> Add List</h1></center>
+
+<% if @invalid_title_error == true %>
+  <font color="red"><b><%= @list.list_title_error %></b></font>
+  <br>
+  <br>
+<% end %>
+
+<form  method="POST" action="/lists/create/confirm">
+  Title:&emsp;<input type="text" name="new_list_title" value="<%= params[:new_list_title] %>">&emsp;&emsp;&emsp;
+  <br>
+  <br>
+  <input type="submit" value="Create"></form>

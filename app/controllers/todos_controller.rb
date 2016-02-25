@@ -25,6 +25,7 @@ MyApp.get "lists/list/:id/todos" do
     erb :"/todos/view_todo"
 end
 
+
 MyApp.get "/users/user/:id/todos" do
   @current_user = User.find_by_id(session[:user_id])
   @percentage_done =@current_user.percent_of_list_done
@@ -44,6 +45,7 @@ end
 
 MyApp.get "/users/user/:id/todos/create" do
       @current_user = User.find_by_id(session[:user_id])
+      @list = List.find_by_id(params[:id])
       @users = User.all
       erb :"/todos/create_todo"
 end
@@ -56,6 +58,8 @@ end
       @todo.description = params[:new_description]
       @todo.completed = false
       @todo.user_id = params[:create_user_selection]
+      @todo.created_by = @current_user.id
+      @todo.updated_by = @current_user.id
 
       if @todo.check_todo_title_is_valid == false
          @invalid_title_error = true
@@ -94,6 +98,7 @@ MyApp.post "/users/user/:id/todos/:id/update/confirmation" do
       @todo.title = params[:update_title]
       @todo.description = params[:update_description]
       @todo.user_id = params[:update_user_selection]
+      @todo.updated_by = @current_user.id
       
       if Todo.where({"title" => @todo.title, "user_id" => @current_user.id, "completed" => false}).where.not("id" => @todo.id).length >= 1
         @duplicate_title_error = true
