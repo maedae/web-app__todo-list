@@ -105,3 +105,19 @@ MyApp.post "/users/user/:id/todos/:id/lock"do
       erb :"/logins/login"
     end
 end
+
+MyApp.post "/users/user/:id/todos/:id/delete"do
+    if User.find_by_id(session[:user_id]) != nil
+      @current_user = User.find_by_id(session[:user_id])
+      @todo = Todo.find_by_id(params[:id])
+ 
+      if @todo.completed == false
+        @todo.delete
+        redirect :"/users/user/#{session[:user_id]}/todos"
+      else
+        erb :"/todos/deleted_error"
+      end
+    else
+      erb :"/logins/login"
+    end
+end
