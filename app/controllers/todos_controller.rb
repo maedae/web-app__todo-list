@@ -88,3 +88,20 @@ MyApp.post "/users/user/:id/todos/:id/update/confirmation" do
       erb :"/logins/login"
     end
 end
+
+MyApp.post "/users/user/:id/todos/:id/lock"do
+    if User.find_by_id(session[:user_id]) != nil
+      @current_user = User.find_by_id(session[:user_id])
+      @todo = Todo.find_by_id(params[:id])
+ 
+      if @todo.completed == false
+        @todo.completed = true
+        @todo.save
+        redirect :"/users/user/#{session[:user_id]}/todos"
+      else
+        redirect :"/users/user/#{session[:user_id]}/todos"
+      end
+    else
+      erb :"/logins/login"
+    end
+end

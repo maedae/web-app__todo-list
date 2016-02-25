@@ -8,6 +8,8 @@
     <thead>
       <tr>
       <th></th>
+      <th></th>
+      <th></th>
       <th> &emsp;&emsp;</th>
       <th></th>
       <th>&emsp;&emsp;</th>
@@ -19,6 +21,8 @@
     <tbody>
       <% @current_todos.each do |todo| %>
         <tr>
+        <td><form  method="POST" action="/users/user/<%= @current_user.id %>/todos/<%= todo.id %>/lock">
+            <input type="submit" value="DONE"></form></td>
         <td>• <%= todo.title %></td>
         <td>&emsp;&emsp;</td>
         <td> <%=todo.description %> </td>
