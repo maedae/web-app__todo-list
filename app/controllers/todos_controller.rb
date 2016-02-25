@@ -26,7 +26,7 @@ MyApp.get "lists/list/:id/todos" do
 end
 
 
-MyApp.get "/users/user/:id/todos" do
+MyApp.get "/list/listid/todos" do
   @current_user = User.find_by_id(session[:user_id])
   @percentage_done =@current_user.percent_of_list_done
     if @current_user.get_unfinished_todos.empty? == true
@@ -43,21 +43,23 @@ MyApp.get "/users/user/:id/todos" do
     erb :"/todos/view_todo"
 end
 
-MyApp.get "/users/user/:id/todos/create" do
+MyApp.get "/lists/list/:id/todos/create" do
       @current_user = User.find_by_id(session[:user_id])
       @list = List.find_by_id(params[:id])
       @users = User.all
       erb :"/todos/create_todo"
 end
 
-  MyApp.post "/users/user/:id/todos/create/confirmation" do
+  MyApp.post "/lists/list/:id/todos/create/confirmation" do
       @current_user = User.find_by_id(session[:user_id])
+      @list = List.find_by_id(params[:id])
       @users = User.all
       @todo = Todo.new
       @todo.title = params[:new_title]
       @todo.description = params[:new_description]
       @todo.completed = false
       @todo.user_id = params[:create_user_selection]
+      @todo.list_id = @list.id
       @todo.created_by = @current_user.id
       @todo.updated_by = @current_user.id
 
@@ -70,19 +72,21 @@ end
         erb :"/todos/create_todo"
       else
         @todo.save
-        redirect :"/todos/todo/#{@todo.id}/create/success"
+        redirect :"/lists/list/#{@list.id}/todos/create/confirmation/#{@todo.id}/success"
       end
   end
 
-MyApp.get "/todos/todo/:id/create/success" do
+MyApp.get "/lists/list/:id/todos/create/confirmation/:id/success" do
   @current_user = User.find_by_id(session[:user_id])
+  @list = List.find_by_id(params[:id])
   @users = User.all
   @todo_added_notice = true
   erb :"/todos/create_todo"
 end
 
-MyApp.get "/users/user/:id/todos/:id/edit" do
+MyApp.get "/lists/list/:id/todos/todo/:id/update" do
       @users = User.all
+     @list = List.find_by_id(params[:id])
       @current_user = User.find_by_id(session[:user_id])
       @todo = Todo.find_by_id(params[:id])
       if @todo.completed ==true
@@ -93,12 +97,14 @@ end
 
 MyApp.post "/users/user/:id/todos/:id/update/confirmation" do
       @current_user = User.find_by_id(session[:user_id])
+      @list = List.find_by_id(params[:id])
       @users = User.all
       @todo = Todo.find_by_id(params[:id])
       @todo.title = params[:update_title]
       @todo.description = params[:update_description]
       @todo.user_id = params[:update_user_selection]
       @todo.updated_by = @current_user.id
+      @todo.list_id = @list.id
       
       if Todo.where({"title" => @todo.title, "user_id" => @current_user.id, "completed" => false}).where.not("id" => @todo.id).length >= 1
         @duplicate_title_error = true
@@ -109,27 +115,29 @@ MyApp.post "/users/user/:id/todos/:id/update/confirmation" do
          erb :"/todos/update_todo"
       else
         @todo.save
-        redirect :"/users/user/#{session[:user_id]}/todos"
+        redirect :"/lists/list/#{@list.id}/todos"
       end
 end
 
-MyApp.post "/users/user/:id/todos/lock" do
+MyApp.post "/lists/list/:id/todos/lock" do
       @current_user = User.find_by_id(session[:user_id])
+      @list = List.find_by_id(params[:id])
         if params[:completed_checkbox] != nil
           @current_user.lock_batch_todos_for_user(params[:completed_checkbox])
-          redirect :"/users/user/#{session[:user_id]}/todos"
+          redirect :"/lists/list/#{@list.id}/todos"
         else
-          redirect :"/users/user/#{@curren_user.id}/todos"
+          redirect :"/lists/list/#{@list.id}/todos"
         end
 end
 
-MyApp.post "/users/user/:id/todos/:id/delete"do
+MyApp.post "/lists/list/:id/todos/todo/:id/delete"do
       @current_user = User.find_by_id(session[:user_id])
+      @list = List.find_by_id(params[:id])
       @todo = Todo.find_by_id(params[:id])
  
       if @todo.completed == false
         @todo.delete
-        redirect :"/users/user/#{session[:user_id]}/todos"
+        redirect :"/lists/list/#{list.id}/todos"
       else
         erb :"/todos/deleted_error"
       end

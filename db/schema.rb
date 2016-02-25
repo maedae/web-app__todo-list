@@ -19,8 +19,6 @@ ActiveRecord::Schema.define(version: 0) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "title"
-    t.integer  "user_id"
-    t.integer  "todo_id"
     t.boolean  "completed"
     t.integer  "created_by"
     t.integer  "updated_by"
@@ -33,9 +31,9 @@ ActiveRecord::Schema.define(version: 0) do
     t.text     "description"
     t.boolean  "completed"
     t.integer  "user_id"
+    t.integer  "list_id"
     t.integer  "created_by"
     t.integer  "updated_by"
-    t.integer  "list_id"
   end
 
   create_table "users", force: :cascade do |t|

@@ -10,10 +10,11 @@ MyApp.get "/lists" do
   @current_lists = List.where({"completed" => false})
   @completed_lists = List.where({"completed" => true})
     
-    if @current_lists.empty? == true
+    if List.exists?(:completed => false) == false
       @unfinished_error = true
-    elsif @completed_lists.empty? == true
-      @completed_error = true
+    end
+   if List.exists?(:completed => true) == false
+       @completed_error = true
     end
     erb :"/lists/view_all_lists"
 end
@@ -28,14 +29,15 @@ MyApp.post "/lists/create/confirm" do
   @list = List.new
   @list.title = params[:new_list_title]
   @list.created_by = @current_user.id
-  @list.edited_by = @current_user.id
+  @list.updated_by = @current_user.id
   @list.completed = false
 
   if @list.check_list_title_is_valid == false
     @invalid_title_error = true
     erb :"/lists/create_list"
   else
-    @todo.save
-    erb :"/todos/create"
+    @users = User.all
+    @list.save
+    erb :"/todos/create_todo"
   end
 end
