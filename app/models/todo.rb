@@ -10,9 +10,14 @@ class Todo < ActiveRecord::Base
     return "You currently have an open 'todo' task with this title."
   end
 
-    # RETURNS String
+  # RETURNS String
   def todo_title_error
     return "Please add a title"
+  end
+
+  # RETURNS String
+  def todo_completed_error
+    return "This Todo task has already been completed and can no longer be edited"
   end
 
 end

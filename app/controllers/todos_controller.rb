@@ -53,3 +53,38 @@ MyApp.get "/users/user/:id/todos/create" do
     end
   end
 
+MyApp.get "/users/user/:id/todos/:id/edit" do
+    if User.find_by_id(session[:user_id]) == nil
+      erb :"/logins/login"
+    else
+      @current_user = User.find_by_id(session[:user_id])
+      @todo = Todo.find_by_id(params[:id])
+      if @todo.completed ==true
+        @completed_error = true
+      end
+        erb :"/todos/update_todo"
+    end
+  end
+
+MyApp.post "/users/user/:id/todos/:id/update/confirmation"
+    if User.find_by_id(session[:user_id]) != nil
+      @current_user = User.find_by_id(session[:user_id])
+      @todo = Todo.find_by_id(params[:id])
+      
+      if (todo.title != params[:update_title]) && (Todo.exists?(:title => params[:update_title], :user_id => @current_user.id, :completed => false) == true)
+        @duplicate_title_error = true
+        erb :"/todos/update_todo"
+      else
+        @todo.title = params[:update_title]
+        @todo.description = params[:update_description]
+        if @todo.check_todo_title_is_valid == false
+          @invalid_title_error = true
+          erb :"/todos/update_todo"
+        end
+        @todo.save
+        redirect :"/users/user/#{session[:user_id]}/todos"
+      end
+    else
+      erb :"/logins/login"
+    end
+end
