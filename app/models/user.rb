@@ -92,5 +92,24 @@ class User < ActiveRecord::Base
     Todo.where({"user_id" => user}).delete_all
   end
 
+  def percent_of_list_done
+    total_todos = Todo.where({"user_id" => self.id}).length
+    completed_todos = Todo.where({"user_id" => self.id, "completed" => true}).length
+    todo_ratio = 0
+    todo_percentage = 0 
+
+    if total_todos == nil 
+      total_todos = 0
+    end
+
+    if completed_todos == nil 
+      completed_todos = 0
+    end
+
+    todo_ratio = completed_todos / total_todos
+    todo_percentage = todo_ratio * 100
+    return todo_percentage
+  end
+
 end
 

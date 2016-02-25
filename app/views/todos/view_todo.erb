@@ -1,4 +1,7 @@
 <center><h1> <%= @current_user.name %>'s Todo List</h1>
+<u>You have <b><%= @percentage_done %>%</b> of your list completed.</u>
+<br>
+<br>
 
 <h3> CURRENT TODOS </h3>
 <% if @unfinished_error == true %>
@@ -38,6 +41,11 @@
   <br>
   <br>
 <% end %>
+<br>
+<br>
+---------------------------------------------------------------------------
+<br>
+<br>
 
 <h3> COMPLETED TODOS </h3>
 <% if @completed_error == true %>

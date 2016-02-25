@@ -1,6 +1,7 @@
 MyApp.get "/users/user/:id/todos" do
   if User.find_by_id(session[:user_id]) != nil
   @current_user = User.find_by_id(session[:user_id])
+  @percentage_done = @current_user.percent_of_list_done
 
     if @current_user.get_unfinished_todos.empty? == true
       @unfinished_error = true
