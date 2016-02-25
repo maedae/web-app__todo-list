@@ -26,7 +26,7 @@ MyApp.get "/users/user/:id/todos/create" do
       @current_user = User.find_by_id(session[:user_id])
       erb :"/todos/create_todo"
     end
-  end
+end
 
   MyApp.post "/users/user/:id/todos/create/confirmation" do
     if User.find_by_id(session[:user_id]) != nil
@@ -64,23 +64,23 @@ MyApp.get "/users/user/:id/todos/:id/edit" do
       end
         erb :"/todos/update_todo"
     end
-  end
+end
 
-MyApp.post "/users/user/:id/todos/:id/update/confirmation"
+MyApp.post "/users/user/:id/todos/:id/update/confirmation" do
     if User.find_by_id(session[:user_id]) != nil
       @current_user = User.find_by_id(session[:user_id])
       @todo = Todo.find_by_id(params[:id])
+      @todo.title = params[:update_title]
+      @todo.description = params[:update_description]
       
-      if (todo.title != params[:update_title]) && (Todo.exists?(:title => params[:update_title], :user_id => @current_user.id, :completed => false) == true)
+      if Todo.where({"title" => @todo.title, "user_id" => @current_user.id, "completed" => false}).where.not("id" => @todo.id).length >= 1
         @duplicate_title_error = true
         erb :"/todos/update_todo"
+
+      elsif @todo.check_todo_title_is_valid == false
+         @invalid_title_error = true
+         erb :"/todos/update_todo"
       else
-        @todo.title = params[:update_title]
-        @todo.description = params[:update_description]
-        if @todo.check_todo_title_is_valid == false
-          @invalid_title_error = true
-          erb :"/todos/update_todo"
-        end
         @todo.save
         redirect :"/users/user/#{session[:user_id]}/todos"
       end
