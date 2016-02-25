@@ -5,30 +5,29 @@ MyApp.before "/todos*" do
     end
 end
 
-MyApp.get "lists/list/:id/todos" do
+MyApp.get "/lists/list/:id/todos" do
   @current_user = User.find_by_id(session[:user_id])
-  @percentage_done =@current_user.percent_of_list_done
-  @unfinished_todos = Todo.where({"complete" => false})
-  @completed_todos = Todo.where({"complete" => true})
+  @list = List.find_by_id(params[:id])
+  @percentage_done = @list.percent_of_list_done
+  @unfinished_todos = Todo.where({"list_id" => @list.id, "completed" => false})
+  @completed_todos = Todo.where({"list_id" => @list.id, "completed" => true})
+
     
-    if @unfinished_todos.empty? == true
+    if Todo.exists?(:completed => false, :list_id => @list.id) == false
     @unfinished_error = true
-    else
-      @current_todos = @current_user.get_unfinished_todos
     end
 
-    if @completed_todos.empty? == true
+    if Todo.exists?(:completed => true, :list_id => @list.id) == false
       @completed_error = true
-    else
-      @completed_todos = @current_user.get_completed_todos
     end
     erb :"/todos/view_todo"
 end
 
 
-MyApp.get "/list/listid/todos" do
+MyApp.get "users/user/:id/list/list/:id/todos" do
   @current_user = User.find_by_id(session[:user_id])
   @percentage_done =@current_user.percent_of_list_done
+   @list = List.find_by_id(params[:id])
     if @current_user.get_unfinished_todos.empty? == true
       @unfinished_error = true
     else
@@ -67,16 +66,16 @@ end
          @invalid_title_error = true
          erb :"/todos/create_todo"
 
-      elsif Todo.exists?(:title => params[:new_title], :completed => false, :user_id => @current_user.id) == true
+      elsif Todo.exists?(:title => params[:new_title], :completed => false, :list_id => @list.id) == true
         @duplicate_title_error = true
         erb :"/todos/create_todo"
       else
         @todo.save
-        redirect :"/lists/list/#{@list.id}/todos/create/confirmation/#{@todo.id}/success"
+        redirect :"/lists/list/#{@list.id}/todos/create/confirmation/success"
       end
   end
 
-MyApp.get "/lists/list/:id/todos/create/confirmation/:id/success" do
+MyApp.get "/lists/list/:id/todos/create/confirmation/success" do
   @current_user = User.find_by_id(session[:user_id])
   @list = List.find_by_id(params[:id])
   @users = User.all

@@ -1,4 +1,4 @@
-<center><h1> Todo List for <%= @list.title %></h1>
+<center><h1> <%= @current_user.name %>'s Todo List for [LIST NAME HERE]</h1>
 <form  method="GET" action="/users/user/<%= @current_user.id %>/todos/create">
 You have <b><%= @percentage_done %>%</b> of your assigned tasks completed.&emsp;&emsp;<input type="submit" value="Add Todo"></form>
 <br>
@@ -11,26 +11,22 @@ You have <b><%= @percentage_done %>%</b> of your assigned tasks completed.&emsp;
   <table border="0">
     <thead>
       <tr>
-      <th>COMPLETED</th>
+      <th></th>
       <th> &emsp;&emsp;</th>
-      <th>TODO</th>
+      <th></th>
       <th> &emsp;&emsp;</th>
-      <th>DESCRIPTION</th>
-      <th> &emsp;&emsp;</th>
-      <th>ASSIGNED TO:</th>
+      <th></th>
       </tr>
     </thead>
     <tbody>
-      <% @unfinished_todos.each do |todo| %>
+      <% @current_todos.each do |todo| %>
         <tr>
-        <td><form  method="POST" action="/lists/list/<%= @list.id %>/todos/lock">
+        <td><form  method="POST" action="/users/user/<%= @current_user.id %>/todos/lock">
             <input type="checkbox" name="completed_checkbox[]" value=<%= todo.id %>></td>
         <td>&emsp;&emsp;</td>
-        <td><a href="/lists/list/<%= @list.id %>/todos/<%= todo.id %>/update"><%= todo.title %></a></td>
+        <td><a href="/users/user/<%= @current_user.id %>/todos/<%= todo.id %>/edit"><%= todo.title %></a></td>
         <td>&emsp;&emsp;</td>
         <td> <%=todo.description %> </td>
-        <td>&emsp;&emsp;</td>
-        <td> <%= todo.get_user_name %></td>
       <% end %>
       </tr>
     </tbody>

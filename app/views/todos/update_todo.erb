@@ -6,7 +6,7 @@
     <br>
   <% end %>
 
-  <form  method="POST" action="/users/user/<%= @current_user.id %>/todos/<%= @todo.id %>/update/confirmation">
+  <form  method="POST" action="/lists/list/<%= @list.id %>/todos/<%= @todo.id %>/update/confirmation">
 
   <% if @invalid_title_error == true %>
     <font color="red"><b><%= @todo.todo_title_error %></b></font>
@@ -40,7 +40,7 @@ Reassign to:&emsp;<select name="update_user_selection">
     <br>
 
    <p><input type="submit" value="Update"></p>
-   <p><form  method="POST" action="/users/user/<%= @current_user.id %>/todos/<%= @todo.id %>/delete">
+   <p><form  method="POST" action="/lists/list<%= @list.id %>/todos/<%= @todo.id %>/delete">
     <input type="submit" value="Delete"></form></p>
    </form>
     

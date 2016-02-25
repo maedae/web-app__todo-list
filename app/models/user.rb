@@ -109,7 +109,7 @@ class User < ActiveRecord::Base
     Todo.where({"user_id" => user}).delete_all
   end
 
-  def percent_of_list_done
+  def percent_of_list_done_for_user
     total_todos = Todo.where({"user_id" => self.id}).length
     completed_todos = Todo.where({"user_id" => self.id, "completed" => true}).length
 

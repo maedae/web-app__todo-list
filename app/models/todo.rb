@@ -25,4 +25,9 @@ class Todo < ActiveRecord::Base
     return User.find_by_id(self.user_id)
   end
 
+  # RETURNS String containing user;s name. User instance where todo user_id matches user id . 
+  def get_user_name
+    user_info = User.find_by_id(self.user_id)
+    return user_info.name
+  end
 end
