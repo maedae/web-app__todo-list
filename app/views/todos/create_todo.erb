@@ -11,6 +11,11 @@
   <br>
   <br>
 <% end %>
+  <% if @todo_added_notice == true %>
+    <font color="green"><b>Todo added!</b></font>
+    <br>
+    <br>
+  <% end %>
   <form  method="POST" action="/users/user/<%= @current_user.id %>/todos/create/confirmation">
 
 
@@ -36,6 +41,8 @@
    </form>
 <br>
 <br>
+<form  method="GET" action="/users/user/<%= @current_user.id %>/todos">
+<input type="submit" value="Finished">
 <% if session[:user_id] != nil %> 
   <div align="center">
   <form  method="POST" action="/logout">

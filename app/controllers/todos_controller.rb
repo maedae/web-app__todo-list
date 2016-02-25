@@ -66,9 +66,16 @@ end
         erb :"/todos/create_todo"
       else
         @todo.save
-        redirect :"/users/user/#{session[:user_id]}/todos"
+        redirect :"/todos/todo/#{@todo.id}/create/success"
       end
   end
+
+MyApp.get "/todos/todo/:id/create/success" do
+  @current_user = User.find_by_id(session[:user_id])
+  @users = User.all
+  @todo_added_notice = true
+  erb :"/todos/create_todo"
+end
 
 MyApp.get "/users/user/:id/todos/:id/edit" do
       @users = User.all
