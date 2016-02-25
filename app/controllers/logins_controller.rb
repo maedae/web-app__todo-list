@@ -21,8 +21,8 @@ end
 MyApp.post "/logout" do
   if User.find_by_id(session[:user_id]) != nil
     session[:user_id] = nil
-    erb :"/main"
+    redirect :"/login"
   else
-    erb :"/logins/login"
+    redirect :"/login"
   end
 end

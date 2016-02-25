@@ -1,4 +1,4 @@
-<center><h1> Are You Sure? </h1></center>
+<center><h1> Are You Sure? </center></h1>
 
 <% if @invalid_password == true %>
 <font color="red"><b>Invalid password.</b></font>
@@ -18,3 +18,12 @@ please enter your password below and confirm:
 
 <p><input type="submit" value="Delete User"></p>
 </form>
+
+
+<% if session[:user_id] != nil %> 
+  <div align="center">
+  <form  method="POST" action="/logout">
+  <input type="submit" value="Sign Out">
+  </form>
+  </div>
+<% end %>

@@ -2,3 +2,12 @@
 <br>
 <br>
 <a href="/sign_up"> Create Account </a>
+<br>
+<br>
+<% if session[:user_id] != nil %> 
+  <div align="center">
+  <form  method="POST" action="/logout">
+  <input type="submit" value="Sign Out">
+  </form>
+  </div>
+<% end %>

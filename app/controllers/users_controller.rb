@@ -45,7 +45,7 @@ end
 
 MyApp.get "/users/user/:id/update" do
   if User.find_by_id(session[:user_id]) == nil
-    erb :"/logins/login"
+    redirect :"/login"
   else
      @current_user = User.find_by_id(session[:user_id])
      erb :"/users/update_user"
@@ -54,7 +54,7 @@ end
 
 MyApp.post "/users/user/:id/update/confirmed" do
   if User.find_by_id(session[:user_id]) == nil
-    erb :"/logins/login"
+    redirect :"/login"
   else
      @current_user = User.find_by_id(session[:user_id])
      @current_user.name = params[:name].downcase.capitalize
@@ -74,7 +74,7 @@ end
 
 MyApp.get "/users/user/:id/delete" do
   if User.find_by_id(session[:user_id]) == nil
-    erb :"/logins/login"
+    redirect :"/login"
   else
      @current_user = User.find_by_id(session[:user_id])
      erb :"/users/delete_user"
@@ -91,9 +91,9 @@ MyApp.post "/users/user/:id/delete/confirmation" do
       @current_user.delete_user_todos
       @current_user.delete
       session["user_id"] = nil
-      erb :"/main"
+      redirect :"/"
     end
   else
-    erb :"/logins/login"
+    redirect :"/login"
   end
 end

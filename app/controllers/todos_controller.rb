@@ -1,7 +1,6 @@
 MyApp.get "/users/user/:id/todos" do
   if User.find_by_id(session[:user_id]) != nil
   @current_user = User.find_by_id(session[:user_id])
-  @percentage_done = @current_user.percent_of_list_done
 
     if @current_user.get_unfinished_todos.empty? == true
       @unfinished_error = true
@@ -16,13 +15,13 @@ MyApp.get "/users/user/:id/todos" do
     end
     erb :"/todos/view_todo"
   else
-    erb :"/logins/login"
+    redirect :"/login"
   end
 end
 
 MyApp.get "/users/user/:id/todos/create" do
     if User.find_by_id(session[:user_id]) == nil
-      erb :"/logins/login"
+      redirect :"/login"
     else
       @current_user = User.find_by_id(session[:user_id])
       erb :"/todos/create_todo"
@@ -50,13 +49,13 @@ end
         redirect :"/users/user/#{session[:user_id]}/todos"
       end
     else
-      erb :"/logins/login"
+      redirect :"/login"
     end
   end
 
 MyApp.get "/users/user/:id/todos/:id/edit" do
     if User.find_by_id(session[:user_id]) == nil
-      erb :"/logins/login"
+      redirect :"/login"
     else
       @current_user = User.find_by_id(session[:user_id])
       @todo = Todo.find_by_id(params[:id])
@@ -86,7 +85,7 @@ MyApp.post "/users/user/:id/todos/:id/update/confirmation" do
         redirect :"/users/user/#{session[:user_id]}/todos"
       end
     else
-      erb :"/logins/login"
+      redirect :"/login"
     end
 end
 
@@ -103,7 +102,7 @@ MyApp.post "/users/user/:id/todos/:id/lock"do
         redirect :"/users/user/#{session[:user_id]}/todos"
       end
     else
-      erb :"/logins/login"
+      redirect :"/login"
     end
 end
 
@@ -119,6 +118,6 @@ MyApp.post "/users/user/:id/todos/:id/delete"do
         erb :"/todos/deleted_error"
       end
     else
-      erb :"/logins/login"
+      redirect :"/login"
     end
 end

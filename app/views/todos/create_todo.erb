@@ -27,4 +27,12 @@
 
    <p><input type="submit" value="Create"></p>
    </form>
-    
+<br>
+<br>
+<% if session[:user_id] != nil %> 
+  <div align="center">
+  <form  method="POST" action="/logout">
+  <input type="submit" value="Sign Out">
+  </form>
+  </div>
+<% end %>
