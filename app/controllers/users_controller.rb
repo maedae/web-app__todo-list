@@ -65,6 +65,9 @@ MyApp.post "/users/user/:id/update/confirmed" do
       if @error_check.empty? == false
           @error = true
           erb :"/users/update_user"
+        elsif User.where({"email" => @current_user.email}).where.not("id" => @current_user.id).length >= 1
+          @duplicate_email_error = true
+          erb :"/users/update_user"
       else
         @current_user.save
         redirect :"users/user/#{session[:user_id]}"

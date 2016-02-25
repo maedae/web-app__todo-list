@@ -65,7 +65,7 @@ class User < ActiveRecord::Base
 
   # RETURNS String
   def user_already_exists_error
-    return "A user with this email already exists. Please sign in or use a different email"
+    return "A user with this email already exists. Please sign into that account or select a different email"
   end
 
   # RETURNS a Collection of user's todo tasks that are not flagged as completed
@@ -78,10 +78,12 @@ class User < ActiveRecord::Base
     return Todo.where({"user_id" => self.id, "completed" => true})
   end
 
+  # RETURNS String
   def get_no_unfinished_todos_message
     return "You do not have any available 'Todo' tasks."
   end
 
+  # RETURNS String
   def get_no_completed_todos_message
     return "You have not finished any 'Todo' tasks."
   end
