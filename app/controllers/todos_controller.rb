@@ -1,3 +1,30 @@
+MyApp.before "/todos*" do 
+    @current_user = User.find_by_id(session[:user_id])
+    if @current_user == nil
+        redirect :"/login"
+    end
+end
+
+MyApp.get "/todos" do
+  @current_user = User.find_by_id(session[:user_id])
+  @percentage_done =@current_user.percent_of_list_done
+  @unfinished_todos = Todo.where({"complete" => false})
+  @completed_todos = Todo.where({"complete" => true})
+    
+    if @unfinished_todos.empty? == true
+    @unfinished_error = true
+    else
+      @current_todos = @current_user.get_unfinished_todos
+    end
+
+    if @completed_todos.empty? == true
+      @completed_error = true
+    else
+      @completed_todos = @current_user.get_completed_todos
+    end
+    erb :"/todos/view_todo"
+end
+
 MyApp.get "/users/user/:id/todos" do
   if User.find_by_id(session[:user_id]) != nil
   @current_user = User.find_by_id(session[:user_id])

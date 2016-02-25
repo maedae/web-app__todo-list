@@ -1,3 +1,9 @@
+MyApp.before "/users*" do 
+    @current_user = User.find_by_id(session[:user_id])
+    if @current_user == nil
+        redirect :"/login"
+    end
+end
 # controller used for the creation of a new user.
 # page contains new user form. 
 MyApp.get "/sign_up" do
@@ -35,27 +41,16 @@ MyApp.post "/sign_up/confirmation" do
 end
 
 MyApp.get "/users/user/:id" do
-  if User.find_by_id(session[:user_id]) == nil
-    erb :"/logins/login"
-  else
      @user = User.find_by_id(session[:user_id])
      erb :"/users/view_user"
-  end
 end
 
 MyApp.get "/users/user/:id/update" do
-  if User.find_by_id(session[:user_id]) == nil
-    redirect :"/login"
-  else
      @current_user = User.find_by_id(session[:user_id])
      erb :"/users/update_user"
-  end
 end
 
 MyApp.post "/users/user/:id/update/confirmed" do
-  if User.find_by_id(session[:user_id]) == nil
-    redirect :"/login"
-  else
      @current_user = User.find_by_id(session[:user_id])
      @current_user.name = params[:name].downcase.capitalize
      @current_user.email = params[:email]
@@ -65,27 +60,21 @@ MyApp.post "/users/user/:id/update/confirmed" do
       if @error_check.empty? == false
           @error = true
           erb :"/users/update_user"
-        elsif User.where({"email" => @current_user.email}).where.not("id" => @current_user.id).length >= 1
+      elsif User.where({"email" => @current_user.email}).where.not("id" => @current_user.id).length >= 1
           @duplicate_email_error = true
           erb :"/users/update_user"
       else
         @current_user.save
         redirect :"users/user/#{session[:user_id]}"
       end
-  end
 end
 
 MyApp.get "/users/user/:id/delete" do
-  if User.find_by_id(session[:user_id]) == nil
-    redirect :"/login"
-  else
      @current_user = User.find_by_id(session[:user_id])
      erb :"/users/delete_user"
-  end
 end
 
 MyApp.post "/users/user/:id/delete/confirmation" do
-  if User.find_by_id(session[:user_id]) != nil
     @current_user = User.find_by_id(session[:user_id])
     if @current_user.password != params[:password]
       @invalid_password = true
@@ -94,9 +83,6 @@ MyApp.post "/users/user/:id/delete/confirmation" do
       @current_user.delete_user_todos
       @current_user.delete
       session["user_id"] = nil
-      redirect :"/"
+      redirect :"/login"
     end
-  else
-    redirect :"/login"
-  end
 end

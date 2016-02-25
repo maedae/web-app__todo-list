@@ -19,10 +19,6 @@ MyApp.post "/login/confirmation" do
 end
 
 MyApp.post "/logout" do
-  if User.find_by_id(session[:user_id]) != nil
     session[:user_id] = nil
     redirect :"/login"
-  else
-    redirect :"/login"
-  end
 end
