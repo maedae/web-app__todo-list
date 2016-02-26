@@ -16,7 +16,7 @@
     <br>
     <br>
   <% end %>
-  <form  method="POST" action="/lists/list/<%= @list.id %>/todos/create/confirmation">
+  <form  method="POST" action="/lists/<%= @list.id %>/todos/create/confirmation">
 
 
     Title:&emsp;<input type="text" name="new_title" value="<%= params[:new_title] %>">&emsp;&emsp;&emsp;
@@ -41,7 +41,7 @@
    </form>
 <br>
 <br>
-<form  method="GET" action="/lists/list/<%= @list.id %>/todos">
+<form  method="GET" action="/lists/<%= @list.id %>/todos">
 <input type="submit" value="Finished">
 <% if session[:user_id] != nil %> 
   <div align="center">

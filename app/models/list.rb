@@ -10,6 +10,10 @@ class List < ActiveRecord::Base
     return "Please add a title"
   end
 
+  def list_title_already_exists_error
+    return "There is already an open list with this title."
+  end
+
   def percent_of_list_done
     total_todos = Todo.where({"list_id" => self.id}).length
     completed_todos = Todo.where({"list_id" => self.id, "completed" => true}).length

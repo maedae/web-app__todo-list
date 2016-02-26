@@ -11,7 +11,7 @@ please enter your password below and confirm:
 <br>
 <br>
 
-<form  method="POST" action="/users/user/<%= @current_user.id %>/delete/confirmation">
+<form  method="POST" action="/users/<%= @current_user.id %>/delete/confirmation">
 
 <p> Password:&emsp;
 <input type="text" name="password" value="<%= params[:password] %>"></p>

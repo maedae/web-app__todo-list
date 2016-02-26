@@ -22,10 +22,10 @@ XXXX PERCENT OF ALL LISTS ARE FINISHED&emsp;&emsp;<input type="submit" value="Ad
     <tbody>
       <% @current_lists.each do |list| %>
         <tr>
-        <td><form  method="POST" action="/lists/list/<%= list.id %>/lock">
+        <td><form  method="POST" action="/lists/<%= list.id %>/lock">
             <input type="checkbox" name="completed_list_checkbox[]" value=<%= list.id %>></td>
         <td>&emsp;&emsp;</td>
-        <td><a href="/lists/list/<%= list.id %>/todos"><%= list.title %></a></td>
+        <td><a href="/lists/<%= list.id %>/todos"><%= list.title %></a></td>
         <td> &emsp;&emsp;</td>
         <td># OF OPEN TASKS</td>
         <td> &emsp;&emsp;</td>

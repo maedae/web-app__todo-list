@@ -13,7 +13,7 @@
   <br>
 <% end %>
 
-<form  method="POST" action="/users/user/<%= session[:user_id] %>/update/confirmed">
+<form  method="POST" action="/users/<%= session[:user_id] %>/update/confirmed">
 
 <p> Name:&emsp;
 <input type="text" name="name" value="<%= @current_user.name %>"></p>

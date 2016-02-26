@@ -1,6 +1,21 @@
 <center><h1> <%= @current_user.name %>'s Todo List for [LIST NAME HERE]</h1>
-<form  method="GET" action="/users/user/<%= @current_user.id %>/todos/create">
-You have <b><%= @percentage_done %>%</b> of your assigned tasks completed.&emsp;&emsp;<input type="submit" value="Add Todo"></form>
+<table border="0">
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+<body>
+  <tr>
+  <td>You have <b><%= @percentage_done %>%</b> of your assigned tasks completed.&emsp;&emsp;</td>
+
+  <td><form  method="GET" action="/users/<%= @current_user.id %>/todos/create">
+    <input type="submit" value="Add Todo"></form></td>
+
+  <td><form  method="GET" action="/users/<%= @current_user.id %>/todos/create">
+    <input type="submit" value="Add Todo"></form></td>
+</body>
 <br>
 <br>
 

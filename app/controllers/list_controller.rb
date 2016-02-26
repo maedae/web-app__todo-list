@@ -32,12 +32,43 @@ MyApp.post "/lists/create/confirm" do
   @list.updated_by = @current_user.id
   @list.completed = false
 
-  if @list.check_list_title_is_valid == false
+  if List.where({"title" => @list.title, "completed" => false}).length >= 1
+    @duplicate_title_error = true
+    erb :"/lists/create_list"
+
+  elsif @list.check_list_title_is_valid == false
     @invalid_title_error = true
     erb :"/lists/create_list"
   else
     @users = User.all
     @list.save
     erb :"/todos/create_todo"
+  end
+end
+
+MyApp.get "/lists/:id/update" do
+  @list = List.find_by_id(params[:id])
+  erb :"/lists/update_list"
+end
+
+MyApp.post "/lists/:id/update/confirmation" do
+  @current_user = User.find_by_id(session[:user_id])
+  @list = List.find_by_id(params[:id])
+  @list.title = params[:update_list_title]
+  @list.created_by = @current_user.id
+  @list.updated_by = @current_user.id
+  @list.completed = false
+
+  if List.where({"title" => @list.title, "completed" => false}).length >= 1
+    @duplicate_title_error = true
+    erb :"/lists/update_list"
+
+  elsif @list.check_list_title_is_valid == false
+    @invalid_title_error = true
+    erb :"/lists/update_list"
+  else
+    @users = User.all
+    @list.save
+    redirect :"/lists/#{@list.id}/todos"
   end
 end

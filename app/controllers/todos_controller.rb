@@ -5,7 +5,7 @@ MyApp.before "/todos*" do
     end
 end
 
-MyApp.get "/lists/list/:id/todos" do
+MyApp.get "/lists/:id/todos" do
   @current_user = User.find_by_id(session[:user_id])
   @list = List.find_by_id(params[:id])
   @percentage_done = @list.percent_of_list_done
@@ -23,9 +23,9 @@ MyApp.get "/lists/list/:id/todos" do
     erb :"/todos/view_todos"
 end
 
-MyApp.get "/lists/list/:id/todos/todo/:id" do
+MyApp.get "/lists/:id/todos/:todoid" do
       @list = List.find_by_id(params[:id])
-      @todo = Todo.find_by_id(params[:id])
+      @todo = Todo.find_by_id(params[:todoid])
       @todo_user_info = @todo.get_user_info
       @created_by_info = @todo.get_created_by_user_info
       @updated_by_info = @todo.get_updated_by_user_info
@@ -50,14 +50,14 @@ end
 #     erb :"/todos/view_todo"
 # end
 
-MyApp.get "/lists/list/:id/todos/create" do
+MyApp.get "/lists/:id/todos/create" do
       @current_user = User.find_by_id(session[:user_id])
       @list = List.find_by_id(params[:id])
       @users = User.all
       erb :"/todos/create_todo"
 end
 
-  MyApp.post "/lists/list/:id/todos/create/confirmation" do
+  MyApp.post "/lists/:id/todos/create/confirmation" do
       @current_user = User.find_by_id(session[:user_id])
       @list = List.find_by_id(params[:id])
       @users = User.all
@@ -79,11 +79,11 @@ end
         erb :"/todos/create_todo"
       else
         @todo.save
-        redirect :"/lists/list/#{@list.id}/todos/create/confirmation/success"
+        redirect :"/lists/#{@list.id}/todos/create/confirmation/success"
       end
   end
 
-MyApp.get "/lists/list/:id/todos/create/confirmation/success" do
+MyApp.get "/lists/:id/todos/create/confirmation/success" do
   @current_user = User.find_by_id(session[:user_id])
   @list = List.find_by_id(params[:id])
   @users = User.all
@@ -91,9 +91,9 @@ MyApp.get "/lists/list/:id/todos/create/confirmation/success" do
   erb :"/todos/create_todo"
 end
 
-MyApp.get "/lists/list/:id/todos/todo/:id/update" do
+MyApp.get "/lists/:id/todos/:todoid/update" do
       @list = List.find_by_id(params[:id])
-      @todo = Todo.find_by_id(params[:id])
+      @todo = Todo.find_by_id(params[:todoid])
       @users = User.all
       @current_user = User.find_by_id(session[:user_id])
       if @todo.completed ==true
@@ -102,11 +102,11 @@ MyApp.get "/lists/list/:id/todos/todo/:id/update" do
         erb :"/todos/update_todo"
 end
 
-MyApp.post "/lists/list/:id/todos/todo/:id/update/confirmation" do
+MyApp.post "/lists/:id/todos/:todoid/update/confirmation" do
       @current_user = User.find_by_id(session[:user_id])
       @list = List.find_by_id(params[:id])
       @users = User.all
-      @todo = Todo.find_by_id(params[:id])
+      @todo = Todo.find_by_id(params[:todoid])
       @todo.title = params[:update_title]
       @todo.description = params[:update_description]
       @todo.user_id = params[:update_user_selection]
@@ -122,7 +122,7 @@ MyApp.post "/lists/list/:id/todos/todo/:id/update/confirmation" do
          erb :"/todos/update_todo"
       else
         @todo.save
-        redirect :"/lists/list/#{@list.id}/todos"
+        redirect :"/lists/#{@list.id}/todos"
       end
 end
 
@@ -133,18 +133,18 @@ MyApp.post "/lists/list/:id/todos/lock" do
           @current_user.lock_batch_todos_for_user(params[:completed_checkbox])
           redirect :"/lists/list/#{@list.id}/todos"
         else
-          redirect :"/lists/list/#{@list.id}/todos"
+          redirect :"/lists/#{@list.id}/todos"
         end
 end
 
-MyApp.post "/lists/list/:id/todos/todo/:id/delete"do
+MyApp.post "/lists/list/:id/todos/todo/:todoid/delete"do
       @current_user = User.find_by_id(session[:user_id])
       @list = List.find_by_id(params[:id])
-      @todo = Todo.find_by_id(params[:id])
+      @todo = Todo.find_by_id(params[:todoid])
  
       if @todo.completed == false
         @todo.delete
-        redirect :"/lists/list/#{list.id}/todos"
+        redirect :"/lists/#{list.id}/todos"
       else
         erb :"/todos/deleted_error"
       end

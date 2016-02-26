@@ -15,8 +15,8 @@ Created by: <%= @created_by_info.name %>  </i>
 
 
 
-<p><form  method="GET" action="/lists/list/<%= @list.id %>/todos/todo/<%= @todo.id %>/update">
+<p><form  method="GET" action="/lists/<%= @list.id %>/todos/<%= @todo.id %>/update">
 <input type="submit" value="Update"></form></p>
 
-<p><form  method="POST" action="/lists/list/<%= @list.id %>/todos/<%= @todo.id %>/delete">
+<p><form  method="POST" action="/lists/<%= @list.id %>/todos/<%= @todo.id %>/delete">
     <input type="submit" value="Delete"></form></p>
