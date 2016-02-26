@@ -20,27 +20,35 @@ MyApp.get "/lists/list/:id/todos" do
     if Todo.exists?(:completed => true, :list_id => @list.id) == false
       @completed_error = true
     end
-    erb :"/todos/view_todo"
+    erb :"/todos/view_todos"
 end
 
-
-MyApp.get "users/user/:id/list/list/:id/todos" do
-  @current_user = User.find_by_id(session[:user_id])
-  @percentage_done =@current_user.percent_of_list_done
-   @list = List.find_by_id(params[:id])
-    if @current_user.get_unfinished_todos.empty? == true
-      @unfinished_error = true
-    else
-      @current_todos = @current_user.get_unfinished_todos
-    end
-
-    if @current_user.get_completed_todos.empty? == true
-      @completed_error = true
-    else
-      @completed_todos = @current_user.get_completed_todos
-    end
-    erb :"/todos/view_todo"
+MyApp.get "/lists/list/:id/todos/todo/:id" do
+      @list = List.find_by_id(params[:id])
+      @todo = Todo.find_by_id(params[:id])
+      @todo_user_info = @todo.get_user_info
+      @created_by_info = @todo.get_created_by_user_info
+      @updated_by_info = @todo.get_updated_by_user_info
+      erb :"/todos/view_one_todo"
 end
+
+# MyApp.get "users/user/:id/lists/list/:id/todos" do
+#   @current_user = User.find_by_id(session[:user_id])
+#   @percentage_done =@current_user.percent_of_list_done
+#    @list = List.find_by_id(params[:id])
+#     if @current_user.get_unfinished_todos.empty? == true
+#       @unfinished_error = true
+#     else
+#       @current_todos = @current_user.get_unfinished_todos
+#     end
+
+#     if @current_user.get_completed_todos.empty? == true
+#       @completed_error = true
+#     else
+#       @completed_todos = @current_user.get_completed_todos
+#     end
+#     erb :"/todos/view_todo"
+# end
 
 MyApp.get "/lists/list/:id/todos/create" do
       @current_user = User.find_by_id(session[:user_id])
@@ -84,17 +92,17 @@ MyApp.get "/lists/list/:id/todos/create/confirmation/success" do
 end
 
 MyApp.get "/lists/list/:id/todos/todo/:id/update" do
-      @users = User.all
-     @list = List.find_by_id(params[:id])
-      @current_user = User.find_by_id(session[:user_id])
+      @list = List.find_by_id(params[:id])
       @todo = Todo.find_by_id(params[:id])
+      @users = User.all
+      @current_user = User.find_by_id(session[:user_id])
       if @todo.completed ==true
         @completed_error = true
       end
         erb :"/todos/update_todo"
 end
 
-MyApp.post "/users/user/:id/todos/:id/update/confirmation" do
+MyApp.post "/lists/list/:id/todos/todo/:id/update/confirmation" do
       @current_user = User.find_by_id(session[:user_id])
       @list = List.find_by_id(params[:id])
       @users = User.all

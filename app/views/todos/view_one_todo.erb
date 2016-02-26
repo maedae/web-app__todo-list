@@ -1,0 +1,22 @@
+<center><h1><%= @todo.title %></h1>
+Assigned to: <b><%= @todo_user_info.name %></b></center>
+
+
+<b><u>Description:</u></b>
+<br>
+<%= @todo.description %>
+<br>
+<br>
+<br>
+<i>Last Edited by: <%= @updated_by_info.name %> <br>
+Created by: <%= @created_by_info.name %>  </i>
+
+
+
+
+
+<p><form  method="GET" action="/lists/list/<%= @list.id %>/todos/todo/<%= @todo.id %>/update">
+<input type="submit" value="Update"></form></p>
+
+<p><form  method="POST" action="/lists/list/<%= @list.id %>/todos/<%= @todo.id %>/delete">
+    <input type="submit" value="Delete"></form></p>
