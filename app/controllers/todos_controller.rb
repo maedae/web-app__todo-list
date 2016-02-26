@@ -126,18 +126,18 @@ MyApp.post "/lists/:id/todos/:todoid/update/confirmation" do
       end
 end
 
-MyApp.post "/lists/list/:id/todos/lock" do
+MyApp.post "/lists/:id/todos/lock" do
       @current_user = User.find_by_id(session[:user_id])
       @list = List.find_by_id(params[:id])
         if params[:completed_checkbox] != nil
           @current_user.lock_batch_todos_for_user(params[:completed_checkbox])
-          redirect :"/lists/list/#{@list.id}/todos"
+          redirect :"/lists/#{@list.id}/todos"
         else
           redirect :"/lists/#{@list.id}/todos"
         end
 end
 
-MyApp.post "/lists/list/:id/todos/todo/:todoid/delete"do
+MyApp.post "/lists/list/:id/todos/:todoid/delete"do
       @current_user = User.find_by_id(session[:user_id])
       @list = List.find_by_id(params[:id])
       @todo = Todo.find_by_id(params[:todoid])

@@ -72,3 +72,16 @@ MyApp.post "/lists/:id/update/confirmation" do
     redirect :"/lists/#{@list.id}/todos"
   end
 end
+
+MyApp.post "/lists/:id/delete" do
+      @current_user = User.find_by_id(session[:user_id])
+      @list = List.find_by_id(params[:id])
+        if @list.check_if_open_todo_tasks_exist == true
+          @active_todos_error = true
+          redirect :"/lists/#{@list.id}/todos"
+        else
+          @list.delete_list_todos
+          @list.delete
+          redirect :"/lists"
+        end
+end

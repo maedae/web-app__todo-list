@@ -2,6 +2,11 @@
 <center><h1> ALL LISTS</h1></center>
 <form  method="GET" action="/lists/create">
 XXXX PERCENT OF ALL LISTS ARE FINISHED&emsp;&emsp;<input type="submit" value="Add List"></form>
+<% if @active_todos_error == true %>
+<br>
+<br>
+<font color="red"><b><%= @error %></b></font>
+<% end %>
 
 <h3> CURRENT LISTS </h3>
 <% if @unfinished_error == true %>
